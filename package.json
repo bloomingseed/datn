@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "csv-write-stream": "^2.0.0",
+    "js-yaml": "^4.1.0",
     "jsdom": "^19.0.0",
     "puppeteer-core": "^13.7.0"
   }

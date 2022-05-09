@@ -1,0 +1,53 @@
+- name: dantri
+  templates:
+    - 'https://dantri.com.vn/xa-hoi/chinh-tri/trang-#{i}.htm'
+    - 'https://dantri.com.vn/kinh-doanh/trang-#{i}.htm'
+    - 'https://dantri.com.vn/the-gioi/trang-#{i}.htm'
+    - 'https://dantri.com.vn/giai-tri/trang-#{i}.htm'
+    - 'https://dantri.com.vn/the-thao/trang-#{i}.htm'
+    - 'https://dantri.com.vn/suc-khoe/trang-#{i}.htm'
+    - 'https://dantri.com.vn/doi-song/trang-#{i}.htm'
+    - 'https://dantri.com.vn/giao-duc-huong-nghiep/trang-#{i}.htm'
+    - 'https://dantri.com.vn/phap-luat/trang-#{i}.htm'
+    - 'https://dantri.com.vn/suc-manh-so/trang-#{i}.htm'
+      #limit: 30
+  limit: 3
+- name: vnexpress
+  templates:
+    - 'https://vnexpress.net/thoi-su/chinh-tri-p#{i}'
+    - 'https://vnexpress.net/kinh-doanh-p#{i}'
+    - 'https://vnexpress.net/the-gioi-p#{i}'
+    - 'https://vnexpress.net/giai-tri-p#{i}'
+    - 'https://vnexpress.net/the-thao-p#{i}'
+    - 'https://vnexpress.net/suc-khoe-p#{i}'
+    - 'https://vnexpress.net/doi-song-p#{i}'
+    - 'https://vnexpress.net/giao-duc-p#{i}'
+    - 'https://vnexpress.net/phap-luat-p#{i}'
+    - 'https://vnexpress.net/so-hoa-p#{i}'
+  limit: 20
+- name: thanhnien
+  templates:
+    - 'https://thanhnien.vn/thoi-su/chinh-tri/?trang=#{i}'
+    - 'https://thanhnien.vn/tai-chinh-kinh-doanh/?trang=#{i}'
+    - 'https://thanhnien.vn/the-gioi/?trang=#{i}'
+    - 'https://thanhnien.vn/giai-tri/?trang=#{i}'
+    - 'https://thanhnien.vn/the-thao/?trang=#{i}'
+    - 'https://thanhnien.vn/suc-khoe/?trang=#{i}'
+    - 'https://thanhnien.vn/doi-song/?trang=#{i}'
+    - 'https://thanhnien.vn/giao-duc/?trang=#{i}'
+    - 'https://thanhnien.vn/thoi-su/phap-luat/?trang=#{i}'
+    - 'https://thanhnien.vn/cong-nghe-game/?trang=#{i}'
+  limit: 100
+- name: vietnamnet
+  templates:
+    - 'https://vietnamnet.vn/thoi-su/chinh-tri-page#{i}'
+    - 'https://vietnamnet.vn/kinh-doanh-page#{i}'
+    - 'https://vietnamnet.vn/the-gioi-page#{i}'
+    - 'https://vietnamnet.vn/giai-tri-page#{i}'
+    - 'https://vietnamnet.vn/the-thao-page#{i}'
+    - 'https://vietnamnet.vn/suc-khoe-page#{i}'
+    - 'https://vietnamnet.vn/doi-song-page#{i}'
+    - 'https://vietnamnet.vn/giao-duc-page#{i}'
+    - 'https://vietnamnet.vn/phap-luat-page#{i}'
+    - 'https://vietnamnet.vn/cong-nghe-page#{i}'
+  limit: 100
