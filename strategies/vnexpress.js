@@ -1,5 +1,5 @@
 const SELECTOR = "#dark_theme > section.section.page-detail.top-detail > div > div.sidebar-1 > article"
-const TIMEOUT = 5000
+const TIMEOUT = 30000
 
 async function crawl(url, page){
   try{

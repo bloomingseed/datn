@@ -1,5 +1,5 @@
 const SELECTOR = "#maincontent"
-const TIMEOUT = 5000
+const TIMEOUT = 30000
 
 async function crawl(url, page){
   try{

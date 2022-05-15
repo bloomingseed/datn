@@ -1,5 +1,5 @@
 const SELECTOR = "body > main > div.body-container > div:nth-child(2) > div.grid-dleft.singular-wrap > div > article > div.singular-content"
-const TIMEOUT = 5000
+const TIMEOUT = 30000
 
 async function crawl(url, page){
   try{

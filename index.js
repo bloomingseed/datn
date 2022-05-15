@@ -4,12 +4,12 @@ const CONFIG = require("./lib/config")
 const strategies = require('./strategies');
 const adapters = require("./adapters");
 const {Worker, delay} = require('./lib/worker')
-const WORKERS = 2;
+const WORKERS = 4;
 const loadDb = require('./lib/db');
-const NAVIGATION_TIMEOUT = 10000; //ms
+const NAVIGATION_TIMEOUT = 20000; //ms
 
 let config = {
-  headless: true,
+  headless: false,
   executablePath: '/usr/bin/google-chrome',
   args: ['--disable-background-timer-throttling',
   '--disable-backgrounding-occluded-windows',
@@ -48,7 +48,6 @@ let config = {
   let {connection, db} = await loadDb()
   //const connections = []
   const workers = [];
-  console.log(adapters, strategies)
 
   for(let i = 0; i<WORKERS; ++i){
     let browser = await puppeteer.launch(config);
