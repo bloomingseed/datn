@@ -10,8 +10,7 @@
     - 'https://dantri.com.vn/giao-duc-huong-nghiep/trang-#{i}.htm'
     - 'https://dantri.com.vn/phap-luat/trang-#{i}.htm'
     - 'https://dantri.com.vn/suc-manh-so/trang-#{i}.htm'
-      #limit: 30
-  limit: 3
+  limit: 30
 - name: vnexpress
   templates:
     - 'https://vnexpress.net/thoi-su/chinh-tri-p#{i}'

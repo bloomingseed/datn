@@ -3,10 +3,10 @@ const path = require('path')
 const CONFIG = require("./lib/config")
 const strategies = require('./strategies');
 const adapters = require("./adapters");
-const {openCsvWriter} = require("./lib/openCsvWriter")
-const CSV_PATH = path.resolve(__dirname, './output/dataset-v2.csv')
-const Worker = require('./lib/worker')
-const CORES = 8;
+const {Worker, delay} = require('./lib/worker')
+const WORKERS = 3;
+const loadDb = require('./lib/db');
+const NAVIGATION_TIMEOUT = 10000; //ms
 
 let config = {
   headless: true,
@@ -42,32 +42,48 @@ let config = {
 
 (async () => {
   const browser = await puppeteer.launch(config);
+  let {connection, db} = await loadDb()
+  //const connections = []
   const pages = []
-  for(let i = 0; i<CORES; ++i)
-    pages.push(await browser.newPage());
-  //const page = await browser.newPage();
+  const workers = [];
+  console.log(adapters, strategies)
 
+  for(let i = 0; i<WORKERS; ++i){
+    let page = await browser.newPage()
+    page.setDefaultNavigationTimeout(NAVIGATION_TIMEOUT)
+    pages.push(page);
+    workers.push(Worker(i, 
+      adapters, strategies,
+      page, db //db: connections[i].db
+    ))
+    //connections.push(await loadDb());
+  }
+//const page = await browser.newPage();
+
+  await Promise.all(workers);
+/*
   for(let source_id = 0; source_id<CONFIG.length; ++source_id){
     let source = CONFIG[source_id];
     let adapter = adapters[source.name]
     let strategy = strategies[source.name]
     for(let category_id = 0; category_id<source.templates.length; ++category_id){
-      let rows = [];
-      let queue = [];
-      for(let i = 1; i<=source.limit; ++i)
-        queue.push(source.templates[category_id].replace('#{i}', i))
       let workers = [];
-      for(let i = 0; i<CORES; ++i){
-        workers.push(Worker(`#${i+1}`, queue, {
+      for(let i = 0; i<WORKERS; ++i){
+        workers.push(Worker(i, {
           adapter, strategy, source_id, category_id, 
-          page: pages[i]
+          page: pages[i], db //db: connections[i].db
         }))
       }
-      let results = await Promise.all(workers);
-      for(let result of results)
-        for(let row of result)
-          rows.push(row)
+      await Promise.all(workers);
+      */
       /*
+      for(let result of results){
+        for(let row of result){
+          rows.push(row)
+          delay(10);
+        }
+        delay(10);
+      }
       for(let i = 1; i<=source.limit; ++i){
         console.log(`${source.name} -- Category ${category_id} -- Page ${i}/${source.limit}`)
         let indexUrl = source.templates[category_id].replace('#{i}', i)
@@ -79,12 +95,13 @@ let config = {
           rows.push(row)
         }
       }
-      */
       let writer = openCsvWriter(CSV_PATH)
       for(let row of rows) writer.write(row)
       writer.end()
-    }
-  }
+      delay(10);
+      */
+    //}
+  //}
   /*
   let adapter = adapters.vietnamnet
   let source = CONFIG[3];
@@ -107,8 +124,7 @@ let config = {
   */
 
   await browser.close();
+  await connection.close()
+  //for(let i = 0; i<connections.length; ++i)
+  //  await connections[i].close();
 })();
-
-async function process(pageUrls, adapter, strategy){
-
-}
