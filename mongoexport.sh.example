@@ -1,0 +1,1 @@
+mongoexport --host localhost --db datn --collection queue --type=csv --out output/queue.csv -f id,source_id,category_id,url
