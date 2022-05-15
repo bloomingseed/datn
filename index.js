@@ -4,14 +4,16 @@ const CONFIG = require("./lib/config")
 const strategies = require('./strategies');
 const adapters = require("./adapters");
 const {Worker, delay} = require('./lib/worker')
-const WORKERS = 3;
+const WORKERS = 2;
 const loadDb = require('./lib/db');
 const NAVIGATION_TIMEOUT = 10000; //ms
 
 let config = {
   headless: true,
   executablePath: '/usr/bin/google-chrome',
-  args: ['--disable-dev-shm-usage']
+  args: ['--disable-background-timer-throttling',
+  '--disable-backgrounding-occluded-windows',
+  '--disable-renderer-backgrounding']
 };
 //const adapter = require("./adapters/vietnamnet");
 
@@ -41,17 +43,18 @@ let config = {
 */
 
 (async () => {
-  const browser = await puppeteer.launch(config);
+  const browsers = [];
+  //const browser = await puppeteer.launch(config);
   let {connection, db} = await loadDb()
   //const connections = []
-  const pages = []
   const workers = [];
   console.log(adapters, strategies)
 
   for(let i = 0; i<WORKERS; ++i){
+    let browser = await puppeteer.launch(config);
+    browsers.push(browser);
     let page = await browser.newPage()
     page.setDefaultNavigationTimeout(NAVIGATION_TIMEOUT)
-    pages.push(page);
     workers.push(Worker(i, 
       adapters, strategies,
       page, db //db: connections[i].db
@@ -123,7 +126,9 @@ let config = {
   //}
   */
 
-  await browser.close();
+  //await browser.close();
+  for(let i = 0; i<browser.lengt; ++i)
+    await browsers[i].close();
   await connection.close()
   //for(let i = 0; i<connections.length; ++i)
   //  await connections[i].close();
